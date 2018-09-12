@@ -18,9 +18,13 @@
 import os
 import pkgutil
 import shutil
+import sys
 import tempfile
 
-import httplib2
+if sys.version_info[0] < 3:
+    import httplib2_py2_3.python2.httplib2 as httplib2
+else:
+    import httplib2_py2_3.python2.httplib2 as httplib2
 
 
 

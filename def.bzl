@@ -26,11 +26,11 @@ def repositories():
         type = "tar.gz",
         build_file_content = """
 py_library(
-   name = "httplib2",
-   srcs = glob(["**/*.py"]),
-   data = [
-       "python2/httplib2/cacerts.txt",
-       "python3/httplib2/cacerts.txt",
+    name = "httplib2",
+    srcs = glob(["**/*.py"]),
+    data = [
+        "python2/httplib2/cacerts.txt",
+        "python3/httplib2/cacerts.txt",
     ],
    visibility = ["//visibility:public"]
 )""",

@@ -4,7 +4,6 @@ py_library(
     name = "httplib2",
     srcs = ["__init__.py"],
     visibility = ["//visibility:public"],
-    data = ["cacerts.txt"],
     deps = [
       "@httplib2_py2_3//:httplib2",
     ],

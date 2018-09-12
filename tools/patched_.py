@@ -23,8 +23,10 @@ import tempfile
 
 if sys.version_info[0] < 3:
     import httplib2_py2_3.python2.httplib2 as httplib2
+    PACKAGE_PATH = 'httplib2_py2_3.python2.httplib2'
 else:
-    import httplib2_py2_3.python2.httplib2 as httplib2
+    import httplib2_py2_3.python3.httplib2 as httplib2
+    PACKAGE_PATH = 'httplib2_py2_3.python3.httplib2'
 
 
 
@@ -40,7 +42,7 @@ def _monkey_patch_httplib2(extract_dir):
   if os.path.isfile(httplib2.CA_CERTS):
     # Not inside of a PAR file, so don't bother.
     return
-  cacerts_contents = pkgutil.get_data('httplib2', 'cacerts.txt')
+  cacerts_contents = pkgutil.get_data(PACKAGE_PATH, 'cacerts.txt')
   cacerts_filename = os.path.join(extract_dir, 'cacerts.txt')
   with open(cacerts_filename, 'wb') as f:
     f.write(cacerts_contents)

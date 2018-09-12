@@ -80,14 +80,14 @@ py_library(
     # Used for parallel execution in containerregistry
     http_archive(
         name = "concurrent",
-        url = "https://codeload.github.com/agronholm/pythonfutures/tar.gz/3.0.5",
-        sha256 = "a7086ddf3c36203da7816f7e903ce43d042831f41a9705bc6b4206c574fcb765",
-        strip_prefix = "pythonfutures-3.0.5/concurrent/",
+        url = "https://codeload.github.com/agronholm/pythonfutures/tar.gz/3.2.0",
+        sha256 = "fc959e162a3ea775c827f8a5e1810ecd175dbb986c2b16864b47fe491ad6950b",
+        strip_prefix = "pythonfutures-3.2.0",
         type = "tar.gz",
         build_file_content = """
 py_library(
    name = "concurrent",
-   srcs = glob(["**/*.py"]),
+   srcs = glob(["concurrent/**/*.py"]),
    visibility = ["//visibility:public"]
 )""",
     )

@@ -31,7 +31,6 @@ py_library(
 )""",
     )
 
-    # Used by oauth2client
     native.new_http_archive(
         name = "six",
         url = "https://pypi.python.org/packages/source/s/six/six-1.9.0.tar.gz",
@@ -50,25 +49,6 @@ py_library(
    name = "six",
    srcs = [":__init__.py"],
    visibility = ["//visibility:public"],
-)""",
-    )
-
-    # Used for authentication in containerregistry
-    native.new_http_archive(
-        name = "oauth2client",
-        url = "https://codeload.github.com/google/oauth2client/tar.gz/v4.0.0",
-        sha256 = "7230f52f7f1d4566a3f9c3aeb5ffe2ed80302843ce5605853bee1f08098ede46",
-        strip_prefix = "oauth2client-4.0.0/oauth2client/",
-        type = "tar.gz",
-        build_file_content = """
-py_library(
-   name = "oauth2client",
-   srcs = glob(["**/*.py"]),
-   visibility = ["//visibility:public"],
-   deps = [
-     "@containerregistry//httplib2:httplib2",
-     "@six//:six",
-   ]
 )""",
     )
 

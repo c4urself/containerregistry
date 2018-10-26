@@ -156,8 +156,8 @@ class Helper(Basic):
 
     # Some keychains expect a scheme:
     # https://github.com/bazelbuild/rules_docker/issues/111
-    stdout = p.communicate(input='https://' + self._registry)[0]
-    if stdout.strip() == _MAGIC_NOT_FOUND_MESSAGE:
+    stdout = p.communicate(input=('https://' + self._registry).encode())[0]
+    if stdout.decode("utf-8").strip() == _MAGIC_NOT_FOUND_MESSAGE:
       # Use empty auth when no auth is found.
       logging.info('Credentials not found, falling back to anonymous auth.')
       return Anonymous().Get()

@@ -22,7 +22,7 @@ import logging
 import sys
 
 if sys.version_info[0] < 3:
-  import concurrent_py2.concurrent.futures as concurrent_futures
+  import concurrent_py2.futures as concurrent_futures
 else:
   import concurrent.futures as concurrent_futures
 

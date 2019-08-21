@@ -67,6 +67,7 @@ _THREADS = 8
 
 
 def main():
+  import sys; print(sys.version_info)
   logging_setup.DefineCommandLineArgs(parser)
   args = parser.parse_args()
   logging_setup.Init(args=args)

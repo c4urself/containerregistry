@@ -14,6 +14,13 @@
 package(default_visibility = ["//visibility:public"])
 
 py_library(
+    name = "concurrent_py2",
+    srcs = glob([
+        "concurrent_py2/**/*.py",
+    ])
+)
+
+py_library(
     name = "containerregistry",
     srcs = glob([
         "__init__.py",
@@ -23,10 +30,10 @@ py_library(
         "transport/**/*.py",
     ]),
     deps = [
-        "@concurrent//:concurrent",
-        "@httplib2//:httplib2",
-        "@oauth2client//:oauth2client",
+        "@httplib2_py2_3//:httplib2",
         "@six//:six",
+        "//httplib2:httplib2",
+        ":concurrent_py2",
     ],
 )
 

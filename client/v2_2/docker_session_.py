@@ -19,7 +19,12 @@ from __future__ import division
 from __future__ import print_function
 
 import logging
-import concurrent.futures
+import sys
+
+if sys.version_info[0] < 3:
+  import concurrent_py2.futures as concurrent_futures
+else:
+  import concurrent.futures as concurrent_futures
 
 from containerregistry.client import docker_creds
 from containerregistry.client import docker_name
@@ -311,13 +316,13 @@ class Push(object):
       for digest in image.distributable_blob_set():
         self._upload_one(image, digest)
     else:
-      with concurrent.futures.ThreadPoolExecutor(
+      with concurrent_futures.ThreadPoolExecutor(
           max_workers=self._threads) as executor:
         future_to_params = {
             executor.submit(self._upload_one, image, digest): (image, digest)
             for digest in image.distributable_blob_set()
         }
-        for future in concurrent.futures.as_completed(future_to_params):
+        for future in concurrent_futures.as_completed(future_to_params):
           future.result()
 
     # This should complete the upload by uploading the manifest.

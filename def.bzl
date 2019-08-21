@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 
 def repositories():
     """Load bazel dependencies."""
+
 
     http_archive(
         name = "httplib2_py2_3",
@@ -96,5 +98,5 @@ py_library(
     git_repository(
         name = "subpar",
         remote = "https://github.com/google/subpar",
-        commit = "0356bef3fbbabec5f0e196ecfacdeb6db62d48c0",  # 2019-03-07
+        commit = "9fae6b63cfeace2e0fb93c9c1ebdc28d3991b16f",  # 2019-08-21
     )

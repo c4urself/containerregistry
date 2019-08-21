@@ -80,20 +80,12 @@ py_library(
     )
 
     # Used for parallel execution in containerregistry
-    http_archive(
-        name = "concurrent",
-        url = "https://codeload.github.com/agronholm/pythonfutures/tar.gz/3.2.0",
-        sha256 = "fc959e162a3ea775c827f8a5e1810ecd175dbb986c2b16864b47fe491ad6950b",
-        strip_prefix = "pythonfutures-3.2.0/concurrent/",
-        type = "tar.gz",
-        build_file_content = """
-py_library(
-   name = "concurrent",
-   srcs = glob(["**/*.py"]),
-   visibility = ["//visibility:public"]
-)""",
-    )
 
+    git_repository(
+        name = "rules_python",
+        remote = "https://github.com/bazelbuild/rules_python.git",
+        commit = "6c5f479420b0a086e3bc7a6d7c818196d0c89ad8",  # 2019-08-02
+    )
     # For packaging python tools.
     git_repository(
         name = "subpar",

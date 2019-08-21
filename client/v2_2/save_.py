@@ -23,13 +23,8 @@ import io
 import json
 import os
 import tarfile
-import sys
 
-if sys.version_info[0] < 3:
-  import concurrent_py2.futures as concurrent_futures
-else:
-  import concurrent.futures as concurrent_futures
-
+import concurrent.futures
 from containerregistry.client import docker_name
 from containerregistry.client.v1 import docker_image as v1_image
 from containerregistry.client.v1 import save as v1_save
@@ -215,7 +210,7 @@ def fast(image,
       current_digest = docker_digest.SHA256(f.read(), '')
     return current_digest == digest
 
-  with concurrent_futures.ThreadPoolExecutor(max_workers=threads) as executor:
+  with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
     future_to_params = {}
     config_file = os.path.join(directory, 'config.json')
     f = executor.submit(write_file, config_file,
@@ -263,7 +258,7 @@ def fast(image,
       idx += 1
 
     # Wait for completion.
-    for future in concurrent_futures.as_completed(future_to_params):
+    for future in concurrent.futures.as_completed(future_to_params):
       future.result()
 
   return (config_file, layers)
@@ -304,7 +299,7 @@ def uncompressed(image,
     with io.open(name, u'wb') as f:
       f.write(accessor(arg))
 
-  with concurrent_futures.ThreadPoolExecutor(max_workers=threads) as executor:
+  with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
     future_to_params = {}
     config_file = os.path.join(directory, 'config.json')
     f = executor.submit(write_file, config_file,
@@ -340,7 +335,7 @@ def uncompressed(image,
       idx += 1
 
     # Wait for completion.
-    for future in concurrent_futures.as_completed(future_to_params):
+    for future in concurrent.futures.as_completed(future_to_params):
       future.result()
 
   return (config_file, layers)

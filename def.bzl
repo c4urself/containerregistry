@@ -12,28 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def repositories():
     """Load bazel dependencies."""
 
-
     http_archive(
-        name = "httplib2_py2_3",
+        name = "httplib2",
         url = "https://codeload.github.com/httplib2/httplib2/tar.gz/v0.11.3",
         sha256 = "d9f568c183d1230f271e9c60bd99f3f2b67637c3478c9068fea29f7cca3d911f",
-        strip_prefix = "httplib2-0.11.3",
+        strip_prefix = "httplib2-0.11.3/python2/httplib2/",
         type = "tar.gz",
         build_file_content = """
 py_library(
-    name = "httplib2",
-    srcs = glob(["**/*.py"]),
-    data = [
-        "python2/httplib2/cacerts.txt",
-        "python3/httplib2/cacerts.txt",
-    ],
+   name = "httplib2",
+   srcs = glob(["**/*.py"]),
+   data = ["cacerts.txt"],
    visibility = ["//visibility:public"]
 )""",
     )
@@ -73,22 +68,30 @@ py_library(
    srcs = glob(["**/*.py"]),
    visibility = ["//visibility:public"],
    deps = [
-     "@containerregistry//httplib2:httplib2",
+     "@httplib2//:httplib2",
      "@six//:six",
    ]
 )""",
     )
 
     # Used for parallel execution in containerregistry
-
-    git_repository(
-        name = "rules_python",
-        remote = "https://github.com/bazelbuild/rules_python.git",
-        commit = "6c5f479420b0a086e3bc7a6d7c818196d0c89ad8",  # 2019-08-02
+    http_archive(
+        name = "concurrent",
+        url = "https://codeload.github.com/agronholm/pythonfutures/tar.gz/3.0.5",
+        sha256 = "a7086ddf3c36203da7816f7e903ce43d042831f41a9705bc6b4206c574fcb765",
+        strip_prefix = "pythonfutures-3.0.5/concurrent/",
+        type = "tar.gz",
+        build_file_content = """
+py_library(
+   name = "concurrent",
+   srcs = glob(["**/*.py"]),
+   visibility = ["//visibility:public"]
+)""",
     )
+
     # For packaging python tools.
     git_repository(
         name = "subpar",
         remote = "https://github.com/google/subpar",
-        commit = "9fae6b63cfeace2e0fb93c9c1ebdc28d3991b16f",  # 2019-08-21
+        commit = "0356bef3fbbabec5f0e196ecfacdeb6db62d48c0",  # 2019-03-07
     )
